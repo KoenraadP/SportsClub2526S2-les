@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsClub.WebApp.Data;
 
@@ -11,9 +12,11 @@ using SportsClub.WebApp.Data;
 namespace SportsClub.WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260305101012_AddActivitiesTable")]
+    partial class AddActivitiesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,20 +245,6 @@ namespace SportsClub.WebApp.Data.Migrations
                     b.HasKey("ActivityId");
 
                     b.ToTable("Activities");
-
-                    b.HasData(
-                        new
-                        {
-                            ActivityId = 1,
-                            ActivityName = "Voetbal",
-                            MaxParticipants = 30
-                        },
-                        new
-                        {
-                            ActivityId = 2,
-                            ActivityName = "Tennis",
-                            MaxParticipants = 10
-                        });
                 });
 
             modelBuilder.Entity("SportsClub.WebApp.Models.Member", b =>
@@ -277,26 +266,6 @@ namespace SportsClub.WebApp.Data.Migrations
                     b.HasKey("MemberId");
 
                     b.ToTable("Members");
-
-                    b.HasData(
-                        new
-                        {
-                            MemberId = 1,
-                            FirstName = "Koenraad",
-                            LastName = "Pecceu"
-                        },
-                        new
-                        {
-                            MemberId = 2,
-                            FirstName = "Mieke",
-                            LastName = "Lapeire"
-                        },
-                        new
-                        {
-                            MemberId = 3,
-                            FirstName = "Jelle",
-                            LastName = "Vyncke"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

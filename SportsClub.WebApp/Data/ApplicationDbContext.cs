@@ -8,5 +8,28 @@ namespace SportsClub.WebApp.Data
     {
         // properties --> verantwoordelijk voor de databank tabellen
         public DbSet<Member> Members { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+
+        // methode om default data aan de databank toe te voegen
+        // wordt ook wel 'seeden' genoemd
+        // om effectief uit te voeren, nog eens add-migration (naam bvb SeedData)
+        // en update-database commando's in de console
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // members
+            builder.Entity<Member>().HasData(
+                new Member { MemberId = 1, FirstName = "Koenraad", LastName = "Pecceu" },
+                new Member { MemberId = 2, FirstName = "Mieke", LastName = "Lapeire" },
+                new Member { MemberId = 3, FirstName = "Jelle", LastName = "Vyncke" }
+                );
+
+            // activities
+            builder.Entity<Activity>().HasData(
+                new Activity { ActivityId = 1, ActivityName = "Voetbal", MaxParticipants = 30},
+                new Activity { ActivityId = 2, ActivityName = "Tennis", MaxParticipants = 10}
+                );
+        }
     }
 }
