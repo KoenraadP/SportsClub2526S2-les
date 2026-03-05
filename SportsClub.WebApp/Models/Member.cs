@@ -2,7 +2,7 @@
 {
     public class Member
     {
-        // id is nodig voor databank, duidt specifieke records aan
+        // id is nodig voor databank, duidt specifieke records aan, dit is de 'Primary Key'
         public int MemberId { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
