@@ -35,6 +35,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// De 'route' bepaalt de navigatiestructuur van je website, default adres is dus /Home/Index
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
