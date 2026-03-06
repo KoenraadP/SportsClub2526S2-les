@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SportsClub.WebApp.Data;
 using SportsClub.WebApp.Models;
 
 namespace SportsClub.WebApp.Controllers
 {
-    public class MembersController : Controller
+    // DI - dependency injection
+    // we geven de class die we willen gebruiken door als parameter van deze class
+    public class MembersController(ApplicationDbContext db) : Controller
     {
         // deze methode zorgt er voor dat /Members/Index werkt
         public IActionResult Index()
         {
-            // enkele test members aanmaken
-            Member m1 = new Member("Jef", "Piraat");
-            Member m2 = new Member("Kabouter", "Paulus");
-            // lijst maken voor members
-            List<Member> members = new();
-            // test members toevoegen aan lijst
-            members.Add(m1);
-            members.Add(m2);
+            // alle members ophalen uit databank (db) en in list vorm opslaan
+            List<Member> members = db.Members.ToList();
             // lijst van members doorsturen naar index pagina (view)
             return View(members);
         }
