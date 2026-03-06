@@ -9,6 +9,7 @@ namespace SportsClub.WebApp.Data
         // properties --> verantwoordelijk voor de databank tabellen
         public DbSet<Member> Members { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Snack> Snacks { get; set; }    
 
         // methode om default data aan de databank toe te voegen
         // wordt ook wel 'seeden' genoemd
@@ -29,6 +30,12 @@ namespace SportsClub.WebApp.Data
             builder.Entity<Activity>().HasData(
                 new Activity { ActivityId = 1, ActivityName = "Voetbal", MaxParticipants = 30},
                 new Activity { ActivityId = 2, ActivityName = "Tennis", MaxParticipants = 10}
+                );
+
+            // snacks
+            builder.Entity<Snack>().HasData(
+                new Snack { SnackId = 1, SnackName = "Chips", SnackDescription = "Salted potato chips (bag)", SnackPrice = 1.50m },
+                new Snack { SnackId = 2, SnackName = "Chocolate Bar", SnackDescription = "Milk chocolate 50g", SnackPrice = 1.25m }
                 );
         }
     }
