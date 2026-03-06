@@ -5,6 +5,7 @@ namespace SportsClub.WebApp.Controllers
 {
     public class MembersController : Controller
     {
+        // deze methode zorgt er voor dat /Members/Index werkt
         public IActionResult Index()
         {
             // enkele test members aanmaken

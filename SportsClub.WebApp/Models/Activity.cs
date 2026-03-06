@@ -2,6 +2,7 @@
 {
     public class Activity
     {
+        // primary key property
         public int ActivityId { get; set; }
         public string ActivityName { get; set; } = string.Empty;
         public int MaxParticipants { get; set; }
