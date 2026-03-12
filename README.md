@@ -4,4 +4,4 @@ Om deze versie op je eigen computer te gebruiken:
 - Zip volledig uitpakken
 - Applicatie opstarten via SportsClub.sln bestand
 - Bestand appsettings.json openen, naam van Database aanpassen indien nodig (niet verplicht)
-- In de Package Manager Console het commando Update-Database uitvoeren
+- In de Package Manager Console het commando Update-Database uitvoeren **(let op: default project instellen op SportsClub.Data)**
