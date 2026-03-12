@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SportsClub.WebApp.Models;
+using SportsClub.Models;
 
 namespace SportsClub.WebApp.Data
 {

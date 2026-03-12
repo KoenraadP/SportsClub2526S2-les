@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using SportsClub.WebApp.Models;
+using SportsClub.Models;
 
 namespace SportsClub.WebApp.Controllers
 {
