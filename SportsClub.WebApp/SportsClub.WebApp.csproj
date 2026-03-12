@@ -17,11 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SportsClub.Data\SportsClub.Data.csproj" />
     <ProjectReference Include="..\SportsClub.Models\SportsClub.Models.csproj" />
+    <ProjectReference Include="..\SportsClub.Services\SportsClub.Services.csproj" />
   </ItemGroup>
 
 </Project>

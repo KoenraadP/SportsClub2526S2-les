@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportsClub.Models;
 
-namespace SportsClub.WebApp.Data
+namespace SportsClub.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
     {
