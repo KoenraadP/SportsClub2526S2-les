@@ -17,5 +17,24 @@ namespace SportsClub.WebApp.Controllers
             // lijst van members doorsturen naar index pagina (view)
             return View(members);
         }
+
+        // create methode om de create pagina/view te genereren
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // tweede create methode aanduiden als de POST methode
+        // hierdoor wordt de formulier data van de Create view 
+        // automatisch naar deze methode doorgestuurd
+        [HttpPost]
+        public IActionResult Create(Member m)
+        {
+            // create methode uit service gebruiken
+            // om member aan db toe te voegen
+            memberService.Create(m);
+            // terugkeren naar index
+            return RedirectToAction("Index");
+        }
     }
 }

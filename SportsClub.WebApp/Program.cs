@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews();
 
 // services registreren om te kunnen gebruiken in controller
 builder.Services.AddScoped<MemberService>();
+builder.Services.AddScoped<ActivityService>();
 
 var app = builder.Build();
 

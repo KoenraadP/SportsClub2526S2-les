@@ -25,5 +25,16 @@ namespace SportsClub.Services
             List<Member> members = db.Members.ToList();
             return members;
         }
+
+        // methode om één member toe te voegen aan db
+        // er komt via de controller al een nieuw 'Member' binnen
+        // met voornaam en achternaam
+        public void Create(Member m)
+        {
+            // toevoegen 'klaar zetten'
+            db.Members.Add(m);
+            // toevoegen effectief uitvoeren
+            db.SaveChanges();
+        }
     }
 }

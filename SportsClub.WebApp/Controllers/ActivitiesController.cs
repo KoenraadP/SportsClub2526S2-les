@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsClub.Data;
 using SportsClub.Models;
+using SportsClub.Services;
 
 namespace SportsClub.WebApp.Controllers
 {
-    public class ActivitiesController(ApplicationDbContext db) : Controller
+    public class ActivitiesController(ActivityService activityService) : Controller
     {
         public IActionResult Index()
         {
-            List<Activity> activities = db.Activities.ToList();
+            List<Activity> activities = activityService.ReadAll();
             return View(activities);
         }
     }
