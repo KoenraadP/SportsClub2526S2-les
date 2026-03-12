@@ -1,4 +1,4 @@
-﻿namespace SportsClub.WebApp.Models
+﻿namespace SportsClub.Models
 {
     public class Activity
     {
