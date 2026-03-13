@@ -12,5 +12,17 @@ namespace SportsClub.WebApp.Controllers
             List<Activity> activities = activityService.ReadAll();
             return View(activities);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Activity a)
+        {
+            activityService.Create(a);
+            return RedirectToAction("Index");
+        }
     }
 }
