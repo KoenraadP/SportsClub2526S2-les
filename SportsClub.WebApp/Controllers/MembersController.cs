@@ -29,12 +29,29 @@ namespace SportsClub.WebApp.Controllers
         // automatisch naar deze methode doorgestuurd
         [HttpPost]
         public IActionResult Create(Member m)
-        {
-            // create methode uit service gebruiken
-            // om member aan db toe te voegen
-            memberService.Create(m);
-            // terugkeren naar index
-            return RedirectToAction("Index");
+        {         
+            // controleren of Member volledig correct is qua data
+            if (ModelState.IsValid)
+            {
+                // controleren op e-mail duplicates
+                if (memberService.EmailExists(m.Email))
+                {
+                    // als het e-mail adres al in de db zit, custom boodschap tonen
+                    ModelState.AddModelError("Email", "E-mail adres wordt al gebruikt!");
+                    // opnieuw create pagina tonen met data die al ingevuld werd
+                    return View(m);
+                }
+
+                // create methode uit service gebruiken
+                // om member aan db toe te voegen
+                memberService.Create(m);
+                // terugkeren naar index
+                return RedirectToAction("Index");
+            }
+            
+            // als ModelState niet valid is --> dus als een property niet correct ingevuld werd
+            // m wordt ook doorgegeven om de zaken die we al ingevuld hadden te behouden
+            return View(m);
         }
     }
 }

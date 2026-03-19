@@ -12,6 +12,9 @@ namespace SportsClub.Services
     // ApplicationDbContext is de link naar de databank
     public class MemberService(ApplicationDbContext db)
     {
+
+        #region CRUD
+
         // deze class moet alle methodes bevatten
         // voor CRUD operations
         // Create
@@ -36,5 +39,20 @@ namespace SportsClub.Services
             // toevoegen effectief uitvoeren
             db.SaveChanges();
         }
+
+        #endregion
+
+        #region validationmethods
+
+        // methode om te controleren of een e-mail adres al aanwezig is in db
+        public bool EmailExists(string email)
+        {
+            // alle member records checken en e-mail vergelijken
+            if (db.Members.Any(m => m.Email == email)) return true;
+            // e-mail nog niet in db? alles ok dus 'false'
+            return false;
+        }
+
+        #endregion
     }
 }

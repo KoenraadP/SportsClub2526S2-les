@@ -28,7 +28,9 @@ namespace SportsClub.Models
         [Display(Name = "Telefoonnummer")]
         public string? PhoneNumber { get; set; }
 
+        // MinimumAge is onze eigen validatie class, zit in CustomValidation.cs
         [Required(ErrorMessage = "Geboortedatum moet ingevuld worden!")]
+        [MinimumAge(18,ErrorMessage = "Lid moet minstens 18 jaar zijn!")]
         [DataType(DataType.Date)]
         [Display(Name = "Geboortedatum")]
         public DateTime BirthDate { get; set; } 
