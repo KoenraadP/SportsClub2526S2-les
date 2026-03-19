@@ -15,5 +15,13 @@ namespace SportsClub.Services
             List<Activity> activities = db.Activities.ToList();
             return activities;
         }
+
+        public void Create(Activity a)
+        {
+            // toevoegen 'klaar zetten'
+            db.Activities.Add(a);
+            // toevoegen effectief uitvoeren
+            db.SaveChanges();
+        }
     }
 }
