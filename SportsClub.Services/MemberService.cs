@@ -29,6 +29,15 @@ namespace SportsClub.Services
             return members;
         }
 
+        // methode om één member op te halen uit db
+        public Member? Read(int id)
+        {
+            // .Find() gebruikt een primary key parameter
+            // om één specifieke record in de db te zoeken
+            Member? m = db.Members.Find(id);
+            return m;
+        }
+
         // methode om één member toe te voegen aan db
         // er komt via de controller al een nieuw 'Member' binnen
         // met voornaam en achternaam

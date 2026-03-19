@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using SportsClub.Data;
 using SportsClub.Models;
 using SportsClub.Services;
@@ -16,6 +17,27 @@ namespace SportsClub.WebApp.Controllers
             List<Member> members = memberService.ReadAll();
             // lijst van members doorsturen naar index pagina (view)
             return View(members);
+        }
+
+        // methode voor de details pagina/view
+        public IActionResult Details(int id)
+        {
+            // read methode uit service gebruiken om member te zoeken in db
+            Member? m = memberService.Read(id);
+
+            // controleren of m 'null' is (dus als er geen record met deze id gevonden werd)
+            if (m == null)
+            {
+                // boodschap om door te sturen naar volgende pagina
+                // een TempData object blijft in het geheugen van de app tot het één keer gelezen wordt
+                // daarna verdwijnt het weer automatisch
+                TempData["ErrorMessage"] = "Geen lid gevonden met id " + id;
+                // terugkeren naar index pagina
+                return RedirectToAction("Index");
+            }
+
+            // pagina tonen met info over member
+            return View(m);
         }
 
         // create methode om de create pagina/view te genereren

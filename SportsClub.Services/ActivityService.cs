@@ -16,6 +16,14 @@ namespace SportsClub.Services
             return activities;
         }
 
+        public Activity? Read(int id)
+        {
+            // .Find() gebruikt een primary key parameter
+            // om één specifieke record in de db te zoeken
+            Activity? a = db.Activities.Find(id);
+            return a;
+        }
+
         public void Create(Activity a)
         {
             // toevoegen 'klaar zetten'
@@ -23,5 +31,16 @@ namespace SportsClub.Services
             // toevoegen effectief uitvoeren
             db.SaveChanges();
         }
+
+        #region validationmethods
+
+        // methode om te controleren of een e-mail adres al aanwezig is in db
+        public bool NameExists(string activityname)
+        {
+            if (db.Activities.Any(a => a.ActivityName == activityname)) return true;
+            return false;
+        }
+
+        #endregion
     }
 }
