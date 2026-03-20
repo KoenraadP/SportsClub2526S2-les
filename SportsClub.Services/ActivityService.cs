@@ -32,6 +32,17 @@ namespace SportsClub.Services
             db.SaveChanges();
         }
 
+        public bool Delete(int id)
+        {
+            Activity? a = db.Activities.Find(id);
+
+            if (a == null) return false;
+
+            db.Activities.Remove(a);
+            db.SaveChanges();
+            return true;
+        }
+
         #region validationmethods
 
         // methode om te controleren of een e-mail adres al aanwezig is in db

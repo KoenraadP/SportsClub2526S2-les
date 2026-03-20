@@ -40,6 +40,104 @@ namespace SportsClub.WebApp.Controllers
             return View(m);
         }
 
+        // methode om naar Edit view te gaan
+        // zelfde code als Details
+        public IActionResult Edit(int id)
+        {
+            // read methode uit service gebruiken om member te zoeken in db
+            Member? m = memberService.Read(id);
+
+            // controleren of m 'null' is (dus als er geen record met deze id gevonden werd)
+            if (m == null)
+            {
+                // boodschap om door te sturen naar volgende pagina
+                // een TempData object blijft in het geheugen van de app tot het één keer gelezen wordt
+                // daarna verdwijnt het weer automatisch
+                TempData["ErrorMessage"] = "Geen lid gevonden met id " + id;
+                // terugkeren naar index pagina
+                return RedirectToAction("Index");
+            }
+
+            // pagina tonen met info over member
+            return View(m);
+        }
+
+        // POST methode voor edit
+        [HttpPost]
+        public IActionResult Edit(Member updatedMember)
+        {
+            // controleren of Member volledig correct is qua data
+            if (ModelState.IsValid)
+            {
+                // controleren op e-mail duplicates
+                if (memberService.EmailExists(updatedMember.Email,
+                                              updatedMember.MemberId))
+                {
+                    // als het e-mail adres al in de db zit, custom boodschap tonen
+                    ModelState.AddModelError("Email", "E-mail adres wordt al gebruikt!");
+                    // opnieuw edit pagina tonen met data die al ingevuld werd
+                    return View(updatedMember);
+                }
+
+                // update methode uit service gebruiken
+                // om member in db aan te passen
+                memberService.Update(updatedMember);
+                // terugkeren naar index
+                return RedirectToAction("Index");
+            }
+
+            // als ModelState niet valid is --> dus als een property niet correct ingevuld werd
+            // m wordt ook doorgegeven om de zaken die we al ingevuld hadden te behouden
+            return View(updatedMember);
+        }
+
+        // methode om naar Delete view te gaan
+        // zelfde code als Details
+        public IActionResult Delete(int id)
+        {
+            // read methode uit service gebruiken om member te zoeken in db
+            Member? m = memberService.Read(id);
+
+            // controleren of m 'null' is (dus als er geen record met deze id gevonden werd)
+            if (m == null)
+            {
+                // boodschap om door te sturen naar volgende pagina
+                // een TempData object blijft in het geheugen van de app tot het één keer gelezen wordt
+                // daarna verdwijnt het weer automatisch
+                TempData["ErrorMessage"] = "Geen lid gevonden met id " + id;
+                // terugkeren naar index pagina
+                return RedirectToAction("Index");
+            }
+
+            // pagina tonen met info over member
+            return View(m);
+        }
+
+        // POST methode voor Delete
+        // methode MOET een andere naam krijgen omdat met dezelfde parameter gewerkt wordt
+        // omdat deze wel moet 'gezien' worden als Delete door de view, extra attribute actionname
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            // delete uit service uitvoeren en true/false opslaan
+            bool deleteSuccessful = memberService.Delete(id);
+
+            // als delete gelukt is (true)
+            if (deleteSuccessful)
+            {
+                TempData["SuccessMessage"] = "Lid correct verwijderd";
+            }
+            // als delete niet gelukt is (false)
+            else
+            {
+                TempData["ErrorMessage"] = "Probleem met verwijderen";
+            }
+
+            // terug naar index na delete
+            return RedirectToAction("Index");
+        }
+
         // create methode om de create pagina/view te genereren
         public IActionResult Create()
         {
@@ -51,7 +149,7 @@ namespace SportsClub.WebApp.Controllers
         // automatisch naar deze methode doorgestuurd
         [HttpPost]
         public IActionResult Create(Member m)
-        {         
+        {
             // controleren of Member volledig correct is qua data
             if (ModelState.IsValid)
             {
@@ -70,7 +168,7 @@ namespace SportsClub.WebApp.Controllers
                 // terugkeren naar index
                 return RedirectToAction("Index");
             }
-            
+
             // als ModelState niet valid is --> dus als een property niet correct ingevuld werd
             // m wordt ook doorgegeven om de zaken die we al ingevuld hadden te behouden
             return View(m);

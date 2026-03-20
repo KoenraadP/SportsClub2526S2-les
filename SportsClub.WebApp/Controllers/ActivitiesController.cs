@@ -26,6 +26,37 @@ namespace SportsClub.WebApp.Controllers
             return View(a);
         }
 
+        public IActionResult Delete(int id)
+        {
+            Activity? a = activityService.Read(id);
+
+            if (a == null)
+            {
+                TempData["ErrorMessage"] = "Geen activiteit gevonden met id " + id;
+                return RedirectToAction("Index");
+            }
+
+            return View(a);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            bool deleteSuccessful = activityService.Delete(id);
+
+            if (deleteSuccessful)
+            {
+                TempData["SuccessMessage"] = "Activiteit correct verwijderd";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Probleem met verwijderen";
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Create()
         {
             return View();
