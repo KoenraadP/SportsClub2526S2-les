@@ -81,7 +81,22 @@ namespace SportsClub.WebApp.Controllers
 
                 // update methode uit service gebruiken
                 // om member in db aan te passen
-                memberService.Update(updatedMember);
+                bool updateSuccessful = memberService.Update(updatedMember);
+
+                if (updateSuccessful)
+                {
+                    // boodschap als het gelukt is
+                    TempData["SuccessMessage"] = "Data voor "
+                                                + updatedMember.FirstName + " "
+                                                + updatedMember.LastName + " "
+                                                + "aangepast";
+                }
+                else
+                {
+                    // boodschap als er iets fout gelopen is
+                    TempData["ErrorMessage"] = "Update niet gelukt";
+                }
+
                 // terugkeren naar index
                 return RedirectToAction("Index");
             }
