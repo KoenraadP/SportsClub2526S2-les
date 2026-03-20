@@ -26,6 +26,50 @@ namespace SportsClub.WebApp.Controllers
             return View(a);
         }
 
+        public IActionResult Edit(int id)
+        {
+            Activity? a = activityService.Read(id);
+
+            if (a == null)
+            {
+                TempData["ErrorMessage"] = "Geen activiteit gevonden met id " + id;
+                return RedirectToAction("Index");
+            }
+
+            return View(a);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Activity updatedActivity)
+        {
+            if (ModelState.IsValid)
+            {
+                if (activityService.NameExists(updatedActivity.ActivityName,
+                                              updatedActivity.ActivityId))
+                {
+                    ModelState.AddModelError("Activityname", "Naam activiteit wordt al gebruikt!");
+                    return View(updatedActivity);
+                }
+
+                bool updateSuccessful = activityService.Update(updatedActivity);
+
+                if (updateSuccessful)
+                {
+                    TempData["SuccessMessage"] = "Data voor "
+                                                + updatedActivity.ActivityName + " "
+                                                + "aangepast";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Update niet gelukt";
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(updatedActivity);
+        }
+
         public IActionResult Delete(int id)
         {
             Activity? a = activityService.Read(id);

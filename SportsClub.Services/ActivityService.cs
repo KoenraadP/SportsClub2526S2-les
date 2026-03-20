@@ -42,13 +42,25 @@ namespace SportsClub.Services
             db.SaveChanges();
             return true;
         }
+        public bool Update(Activity updatedActivity)
+        {
+            Activity? oldActivity = db.Activities.Find(updatedActivity.ActivityId);
+            if (oldActivity == null) return false;
+
+            oldActivity.ActivityName = updatedActivity.ActivityName;
+            oldActivity.MaxParticipants = updatedActivity.MaxParticipants;
+
+            db.SaveChanges();
+            return true;
+        }
 
         #region validationmethods
 
         // methode om te controleren of een e-mail adres al aanwezig is in db
-        public bool NameExists(string activityname)
+        public bool NameExists(string activityname, int? id = null)
         {
-            if (db.Activities.Any(a => a.ActivityName == activityname)) return true;
+            if (db.Activities.Any(a => a.ActivityName == activityname
+                                    && a.ActivityId != id)) return true;
             return false;
         }
 
