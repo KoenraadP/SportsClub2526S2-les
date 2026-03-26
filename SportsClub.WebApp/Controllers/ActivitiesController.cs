@@ -107,7 +107,7 @@ namespace SportsClub.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Activity a)
+        public IActionResult Create(Activity a, IFormFile? logo)
         {
             if (ModelState.IsValid)
             {
@@ -115,6 +115,41 @@ namespace SportsClub.WebApp.Controllers
                 {
                     ModelState.AddModelError("ActivityName", "Naam bestaat al!");
                     return View(a);
+                }
+
+                if (logo != null)
+                {
+                    // toegelaten extensies
+                    string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
+                    // extensie van picture in variabele opslaan
+                    // als ik bvb idris.jpg kies, zal deze variabele ".jpg" bevatten
+                    string extension = Path.GetExtension(logo.FileName).ToLowerInvariant();
+
+                    // controle op extensie --> als de extension NIET in de array zit
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        // specifieke foutmelding bij picture
+                        ModelState.AddModelError("LogoName", "Verkeerd type afbeelding!");
+                        // create pagina tonen met errors
+                        return View(a);
+                    }
+
+                    // pad naar map instellen waar foto moet opgeslagen worden
+                    string imageFolder = Path.Combine(Directory.GetCurrentDirectory(),
+                                            "wwwroot/images/activities");
+                    // nieuwe naam maken voor afbeelding bestand
+                    string pictureName = Guid.NewGuid() + extension;
+                    // variabele voor VOLLEDIGE pad inclusief de afbeelding naam
+                    string pictureFullPath = Path.Combine(imageFolder, pictureName);
+
+                    using (var stream = new FileStream(pictureFullPath,
+                                                        FileMode.Create))
+                    {
+                        logo.CopyTo(stream);
+                    }
+
+                    // picturename ook toevoegen aan member voor databank
+                    a.LogoName = pictureName;
                 }
 
                 activityService.Create(a);

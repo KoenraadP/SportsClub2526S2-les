@@ -36,20 +36,31 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActivityName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxParticipants)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ActivityId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ActivityId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ActivityId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActivityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxParticipants)
+                </td>
+                <td>
+                    @if (item.LogoName == null)
+                    {
+                        <img src="~/images/activities/default.png" height="50" />
+                    }
+                    else
+                    {
+                        <img src="~/images/activities/@item.LogoName" height="50" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ActivityId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ActivityId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ActivityId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -15,6 +15,9 @@ namespace SportsClub.Models
         [Display(Name = "Aantal deelnemers")]
         public int MaxParticipants { get; set; }
 
+        [Display(Name = "Logo")]
+        public string? LogoName { get; set; }
+
         // relatie property --> voor één activity kunnen veel members ingeschreven worden
         // de list wordt ook onmiddellijk al "geïnitialiseerd" met een lege list
         public List<Member> Members { get; set; } = new();
@@ -24,10 +27,11 @@ namespace SportsClub.Models
             
         }
 
-        public Activity(string activityName, int maxParticipants)
+        public Activity(string activityName, int maxParticipants, string? logoName)
         {
             ActivityName = activityName;
             MaxParticipants = maxParticipants;
+            LogoName = logoName;
         }
     }
 }
