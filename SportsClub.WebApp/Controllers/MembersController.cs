@@ -162,8 +162,10 @@ namespace SportsClub.WebApp.Controllers
         // tweede create methode aanduiden als de POST methode
         // hierdoor wordt de formulier data van de Create view 
         // automatisch naar deze methode doorgestuurd
+        // IFormFile --> soort bestand
+        // naam van parameter picture moet exact zijn zoals name in create view
         [HttpPost]
-        public IActionResult Create(Member m)
+        public IActionResult Create(Member m, IFormFile? picture)
         {
             // controleren of Member volledig correct is qua data
             if (ModelState.IsValid)
@@ -175,6 +177,42 @@ namespace SportsClub.WebApp.Controllers
                     ModelState.AddModelError("Email", "E-mail adres wordt al gebruikt!");
                     // opnieuw create pagina tonen met data die al ingevuld werd
                     return View(m);
+                }
+
+                // als er effectief een foto gekozen werd, deze eerst verwerken
+                if (picture != null)
+                {
+                    // toegelaten extensies
+                    string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
+                    // extensie van picture in variabele opslaan
+                    // als ik bvb idris.jpg kies, zal deze variabele ".jpg" bevatten
+                    string extension = Path.GetExtension(picture.FileName).ToLowerInvariant();
+
+                    // controle op extensie --> als de extension NIET in de array zit
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        // specifieke foutmelding bij picture
+                        ModelState.AddModelError("PictureName", "Verkeerd type afbeelding!");
+                        // create pagina tonen met errors
+                        return View(m);
+                    }
+
+                    // pad naar map instellen waar foto moet opgeslagen worden
+                    string imageFolder = Path.Combine(Directory.GetCurrentDirectory(), 
+                                            "wwwroot/images/members");
+                    // nieuwe naam maken voor afbeelding bestand
+                    string pictureName = Guid.NewGuid() + extension;
+                    // variabele voor VOLLEDIGE pad inclusief de afbeelding naam
+                    string pictureFullPath = Path.Combine(imageFolder, pictureName);
+
+                    using (var stream = new FileStream(pictureFullPath, 
+                                                        FileMode.Create))
+                    {
+                        picture.CopyTo(stream);
+                    }
+
+                    // picturename ook toevoegen aan member voor databank
+                    m.PictureName = pictureName;
                 }
 
                 // create methode uit service gebruiken

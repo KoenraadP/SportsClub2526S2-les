@@ -8,7 +8,7 @@ namespace SportsClub.Models
         public int MemberId { get; set; }
 
         [Required(ErrorMessage = "Voornaam moet ingevuld worden!")]
-        [StringLength(50,MinimumLength = 2, ErrorMessage = "Voornaam moet minstens 2 tekens zijn, maximaal 50")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Voornaam moet minstens 2 tekens zijn, maximaal 50")]
         [Display(Name = "Voornaam")]
         public string FirstName { get; set; } = string.Empty;
 
@@ -30,11 +30,14 @@ namespace SportsClub.Models
 
         // MinimumAge is onze eigen validatie class, zit in CustomValidation.cs
         [Required(ErrorMessage = "Geboortedatum moet ingevuld worden!")]
-        [MinimumAge(18,ErrorMessage = "Lid moet minstens 18 jaar zijn!")]
+        [MinimumAge(18, ErrorMessage = "Lid moet minstens 18 jaar zijn!")]
         [DataType(DataType.Date)]
         [Display(Name = "Geboortedatum")]
-        public DateTime BirthDate { get; set; } 
-        
+        public DateTime BirthDate { get; set; }
+
+        // optioneel: profielfoto property
+        [Display(Name = "Foto")]
+        public string? PictureName { get; set; }
 
         // relatie property voor lijst van activities
         // want een member kan ingeschreven zijn voor meerdere activities
@@ -44,18 +47,20 @@ namespace SportsClub.Models
         // anders error over 'parameterless constructor'
         public Member()
         {
-            
+
         }
 
         // constructor met de nodige eigenschappen
         public Member(string firstName, string lastName,
-            string email, string? phoneNumber, DateTime birthDate)
+            string email, string? phoneNumber, DateTime birthDate,
+            string? pictureName)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PhoneNumber = phoneNumber;
             BirthDate = birthDate;
+            PictureName = pictureName;
         }
     }
 }
