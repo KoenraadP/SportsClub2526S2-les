@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using SportsClub.Data;
 using SportsClub.Models;
@@ -154,6 +155,7 @@ namespace SportsClub.WebApp.Controllers
         }
 
         // create methode om de create pagina/view te genereren
+        //[Authorize]
         public IActionResult Create()
         {
             return View();
