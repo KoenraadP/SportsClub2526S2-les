@@ -70,6 +70,7 @@ namespace SportsClub.Services
         // de member die binnen komt als parameter heeft de nieuwe data
         public bool Update(Member updatedMember)
         {
+
             // huidige record opzoeken in db via id van updatedMember
             Member? oldMember = db.Members.Find(updatedMember.MemberId);
             // probleem met member opzoeken --> resultaat false
